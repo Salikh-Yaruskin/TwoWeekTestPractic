@@ -34,7 +34,7 @@ public class DeleteCustomerTest {
     @Test
     @Story("Удаление пользователя со средним именем")
     @Description("Тест проверяет, что удаляется клиент с именем, равным среднему по длине.")
-    void deleteAvgCustomer() throws InterruptedException {
+    void deleteAvgCustomer() {
         CustomersPage customersPage = new CustomersPage(webDriver);
         List<String> namesBefore = customersPage.getCustomerNames();
 
