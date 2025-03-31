@@ -5,6 +5,7 @@ import io.qameta.allure.*;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -22,7 +23,10 @@ public class AddCustomerTest {
     @BeforeClass
     @Step("Открытие страницы")
     void init(){
-        webDriver = new ChromeDriver();
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--no-sandbox");
+        chromeOptions.addArguments("--headless");
+        webDriver = new ChromeDriver(chromeOptions);
         webDriver.get(PropertyProvider.getInstance().getProperty("web.url.addCustomer"));
     }
 
