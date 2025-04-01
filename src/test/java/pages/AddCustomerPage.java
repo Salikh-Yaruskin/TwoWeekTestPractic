@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
@@ -34,37 +35,43 @@ public class AddCustomerPage extends BasePage{
         dataGenerator = new DataGenerator();
     }
 
-    public void inputPostCode() {
+    @Step("Заполнение поля Post Code")
+    public AddCustomerPage inputPostCode() {
         waitUntilVisible(webDriver, postCodeField);
         postCode = dataGenerator.postCodeGenerator();
         postCodeField.sendKeys(postCode);
-        new AddCustomerPage(webDriver);
+        return this;
     }
 
-    public void inputFirstName(){
+    @Step("Заполнение поля First Name")
+    public AddCustomerPage inputFirstName(){
         waitUntilVisible(webDriver, firstNameField);
         log.info("Post code: {}", postCode);
         firstNameField.sendKeys(dataGenerator.firstNameGenerator(postCode));
-        new AddCustomerPage(webDriver);
+        return this;
     }
 
-    public void inputLastName(String lastName){
+    @Step("заполнение поля Last Name")
+    public AddCustomerPage inputLastName(String lastName){
         waitUntilVisible(webDriver, lastNameField);
         lastNameField.sendKeys(lastName);
-        new AddCustomerPage(webDriver);
+        return this;
     }
 
-    public void clickButton() {
+    @Step("Нажатиен на кнопку Add Customer")
+    public AddCustomerPage clickButton() {
         waitToClick(webDriver, addCustomerButton);
         addCustomerButton.click();
-        new AddCustomerPage(webDriver);
+        return this;
     }
 
+    @Step("Получение значения поля Post Code")
     public String getPostCodeField(){
         waitUntilVisible(webDriver, postCodeField);
         return postCodeField.getAttribute("value");
     }
 
+    @Step("Получение значения поля Last Name")
     public String getLastName(){
         waitUntilVisible(webDriver, lastNameField);
         return lastNameField.getAttribute("value");

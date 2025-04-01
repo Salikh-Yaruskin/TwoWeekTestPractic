@@ -16,38 +16,22 @@ import static org.testng.Assert.assertEquals;
 @Slf4j
 @Epic("Управление пользователями")
 @Feature("Добавление нового пользователя")
-public class AddCustomerTest {
+public class AddCustomerTest extends BasicTest{
 
-    private WebDriver webDriver;
-
-    @BeforeClass
-    @Step("Открытие страницы")
-    void init(){
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--no-sandbox");
-        chromeOptions.addArguments("--headless");
-        webDriver = new ChromeDriver(chromeOptions);
-        webDriver.get(PropertyProvider.getInstance().getProperty("web.url.addCustomer"));
-    }
 
     @Test
     @Story("Создание нового пользователя")
     @Description("Тест проверяет возможность добавления нового пользователя.")
     void addCustomerTest() {
+        webDriver.get(PropertyProvider.getInstance().getProperty("web.url.addCustomer"));
         AddCustomerPage addCustomerPage = new AddCustomerPage(webDriver);
-        addCustomerPage.inputPostCode();
-        addCustomerPage.inputFirstName();
-        addCustomerPage.inputLastName(PropertyProvider.getInstance().getProperty("property.lastname"));
+        addCustomerPage.inputPostCode()
+                .inputFirstName()
+                .inputLastName(PropertyProvider.getInstance().getProperty("property.lastname"));
 
         assertEquals(addCustomerPage.getPostCodeField(), addCustomerPage.getPostCode());
         assertEquals(addCustomerPage.getLastName(), "last_name_user");
 
         addCustomerPage.clickButton();
-    }
-
-    @AfterClass
-    @Step("Закрытие WebDriver")
-    void end(){
-        webDriver.quit();
     }
 }

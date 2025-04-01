@@ -16,34 +16,18 @@ import static org.testng.Assert.assertNotEquals;
 
 @Epic("Управление пользователями")
 @Feature("Сортировка клиентов")
-public class SortedCustomerTest {
-
-    private WebDriver webDriver;
-
-    @BeforeClass
-    @Step("Открытие страницы клиентов")
-    void init(){
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--no-sandbox");
-        chromeOptions.addArguments("--headless");
-        webDriver = new ChromeDriver(chromeOptions);
-        webDriver.get(PropertyProvider.getInstance().getProperty("web.url.customer"));
-    }
+public class SortedCustomerTest extends BasicTest {
 
     @Test
     @Story("Сортировка клиентов по имени")
     @Description("Этот тест проверяет, что список клиентов корректно сортируется по имени.")
     void sortedByName() throws InterruptedException {
+        webDriver.get(PropertyProvider.getInstance().getProperty("web.url.customer"));
+
         CustomersPage customersPage = new CustomersPage(webDriver);
         List<String> namesBefore = customersPage.getCustomerNames();
         customersPage.clickFilter();
         List<String> namesAfter = customersPage.getCustomerNames();
         assertNotEquals(namesBefore, namesAfter, "Customers are not sorted by name");
-    }
-
-    @AfterClass
-    @Step("Закрытие WebDriver")
-    void end(){
-        webDriver.quit();
     }
 }

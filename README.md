@@ -1,2 +1,2 @@
-Запустить тесты - mvn clean test
+Запустить тесты - mvn clean test<br/>
 Сгенерировать отчет - allure serve

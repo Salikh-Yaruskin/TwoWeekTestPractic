@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -25,12 +26,14 @@ public class CustomersPage extends BasePage {
         super(webDriver);
     }
 
+    @Step("Применение фильтра по именам")
     public void clickFilter() {
         waitUntilVisible(webDriver, customerNameFilter);
         customerNameFilter.click();
         new CustomersPage(webDriver);
     }
 
+    @Step("Получение всех имен клиентов")
     public List<String> getCustomerNames() {
         waitUntilVisible(webDriver, customerNameFilter);
         List<String> names = listCustomerName.stream()
@@ -40,6 +43,13 @@ public class CustomersPage extends BasePage {
         return names;
     }
 
+    /**
+     * Вычисляет длину среднего имени клиентов и возвращает первое имя
+     * равное этой длине
+     *
+     * @return Имя клиента с длиной, равной средней длине, или {@code null}, если такого нет.
+     */
+    @Step("Поиск и получение имени клиента,равной средней длине")
     public String getAvgName() {
         waitUntilVisible(webDriver, customerNameFilter);
         Double avg = getCustomerNames().stream()
@@ -51,6 +61,7 @@ public class CustomersPage extends BasePage {
                 .orElse(null);
     }
 
+    @Step("Удаление клиента имя которого равно средней длине")
     public void deleteAvgCustomer() {
         int index = IntStream.range(0, listCustomerName.size())
                 .filter(x -> listCustomerName.get(x).getText().equals(getAvgName()))
