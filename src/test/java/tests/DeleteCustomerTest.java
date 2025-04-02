@@ -9,6 +9,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import pages.CustomersPage;
 
 import java.util.List;
@@ -25,16 +26,18 @@ public class DeleteCustomerTest extends BasicTest{
     @Story("Удаление пользователя со средним именем")
     @Description("Тест проверяет, что удаляется клиент с именем, равным среднему по длине.")
     void deleteAvgCustomer() {
+        SoftAssert softAssert = new SoftAssert();
+
         webDriver.get(PropertyProvider.getInstance().getProperty("web.url.customer"));
         log.info("Url " + PropertyProvider.getInstance().getProperty("web.url.customer"));
         CustomersPage customersPage = new CustomersPage(webDriver);
         List<String> namesBefore = customersPage.getCustomerNames();
 
-        assertEquals(customersPage.getAvgName(), PropertyProvider.getInstance().getProperty("property.firstAvgName"));
+        softAssert.assertEquals(customersPage.getAvgName(), PropertyProvider.getInstance().getProperty("property.firstAvgName"));
 
         customersPage.deleteAvgCustomer();
         List<String> namesAfter = customersPage.getCustomerNames();
 
-        assertNotEquals(namesBefore, namesAfter);
+        softAssert.assertNotEquals(namesBefore, namesAfter);
     }
 }
