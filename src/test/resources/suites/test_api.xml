@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="CRUD entity" parallel="tests" thread-count="3">
+    <test name="CreateAndDeleteEntityTest">
+        <classes>
+            <class name="tests.apitests.CreateEntityTest"/>
+        </classes>
+    </test>
+    <test name="GetAllEntityTest">
+        <classes>
+            <class name="tests.apitests.GetAllEntityTest"/>
+        </classes>
+    </test>
+    <test name="GetEntityByIdTest">
+        <classes>
+            <class name="tests.apitests.GetEntityByIdTest"/>
+        </classes>
+    </test>
+    <test name="PatchEntityTest">
+        <classes>
+            <class name="tests.apitests.PatchEntityTest"/>
+        </classes>
+    </test>
+</suite>
