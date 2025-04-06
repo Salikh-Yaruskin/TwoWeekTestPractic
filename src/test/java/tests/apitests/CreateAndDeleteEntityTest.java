@@ -13,7 +13,7 @@ import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
 
 @Slf4j
-public class CreateEntityTest {
+public class CreateAndDeleteEntityTest {
 
     public RequestSpecification requestSpecification;
     private String entityId;
@@ -37,7 +37,7 @@ public class CreateEntityTest {
                 .extract().asString();
     }
 
-    @AfterClass
+    @Test(dependsOnMethods = "createEntityTest")
     void deleteEntityTest() {
         BaseRequests.deleteEntityById(entityId);
     }

@@ -3,7 +3,7 @@
 <suite name="CRUD entity" parallel="tests" thread-count="3">
     <test name="CreateAndDeleteEntityTest">
         <classes>
-            <class name="tests.apitests.CreateEntityTest"/>
+            <class name="tests.apitests.CreateAndDeleteEntityTest"/>
         </classes>
     </test>
     <test name="GetAllEntityTest">
