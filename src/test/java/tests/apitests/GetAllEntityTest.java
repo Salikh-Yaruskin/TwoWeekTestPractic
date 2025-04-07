@@ -23,7 +23,7 @@ public class GetAllEntityTest {
 
         List<ResponseEntity> entityList = given()
                 .when()
-                .get("http://localhost:8080/api/getAll")
+                .get(PropertyProvider.getInstance().getProperty("property.api_test.url") + "/getAll")
                 .then()
                 .statusCode(200)
                 .extract()

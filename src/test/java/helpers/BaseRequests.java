@@ -4,8 +4,10 @@ import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
+import io.restassured.mapper.ObjectMapperType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import pojo.ResponseEntity;
 
 import static io.restassured.RestAssured.given;
 
@@ -28,5 +30,13 @@ public class BaseRequests {
                 .delete("/api/delete/" + id)
                 .then()
                 .statusCode(204);
+    }
+
+    public static ResponseEntity getEntityById(int entityId) {
+        return given().when()
+                .get(PropertyProvider.getInstance().getProperty("property.api_test.url") +"/get/" + entityId)
+                .then()
+                .statusCode(200)
+                .extract().as(ResponseEntity.class, ObjectMapperType.JACKSON_2);
     }
 }

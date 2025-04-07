@@ -26,11 +26,7 @@ public class PatchEntityTest {
 
     @BeforeClass
     void init() {
-        responseEntity = given().when()
-                .get("http://localhost:8080/api/get/" + entityId)
-                .then()
-                .statusCode(200)
-                .extract().as(ResponseEntity.class, ObjectMapperType.JACKSON_2);
+        responseEntity = BaseRequests.getEntityById(entityId);
     }
 
     @Test
@@ -49,7 +45,10 @@ public class PatchEntityTest {
                 .then()
                 .statusCode(204);
 
-        assertNotEquals(entity.getTitle(), responseEntity.getTitle());
+        ResponseEntity afterPatchEntity = BaseRequests.getEntityById(entityId);
+
+        assertNotEquals(afterPatchEntity.getTitle(), responseEntity.getTitle());
+
     }
 
     @AfterClass

@@ -24,7 +24,7 @@ public class GetEntityByIdTest {
         int arraySize = Integer.parseInt(PropertyProvider.getInstance().getProperty("property.api_test.important_numbers_size"));
 
         ResponseEntity entity = given().when()
-                .get("http://localhost:8080/api/get/" + entityId)
+                .get(PropertyProvider.getInstance().getProperty("property.api_test.url") + "/get/" + entityId)
                 .then()
                 .statusCode(200)
                 .extract().as(ResponseEntity.class, ObjectMapperType.JACKSON_2);
