@@ -29,6 +29,21 @@ jobs:
           key: maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: maven-
 
+      - name: Clone other project
+        run: |
+          git clone https://github.com/bondarenkokate73/simbirsoft_sdet_project.git
+
+      - name: Set up Docker Compose
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/download/v2.21.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+          docker-compose --version
+
+      - name: Start services with Docker Compose
+        run: |
+          cd simbirsoft_sdet_project
+          docker-compose up -d
+
       - name: Install dependencies
         run: mvn clean install -DskipTests
 
@@ -39,3 +54,8 @@ jobs:
         if: always()
         run: mvn allure:report
 
+      - name: Stop services with Docker Compose
+        if: always()
+        run: |
+          cd simbirsoft_sdet_project
+          docker-compose down
