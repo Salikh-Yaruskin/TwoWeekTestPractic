@@ -41,7 +41,7 @@ jobs:
 
       - name: Start services with Docker Compose
         run: |
-            docker-compose -f simbirsoft_sdet_project/docker-compose.yml up -d
+            docker-compose -f /home/runner/work/TwoWeekTestPractic/simbirsoft_sdet_project/docker-compose.yml up -d
 
       - name: Install dependencies
         run: mvn clean install -DskipTests
@@ -56,4 +56,4 @@ jobs:
       - name: Stop services with Docker Compose
         if: always()
         run: |
-            docker-compose -f simbirsoft_sdet_project/docker-compose.yml down
+            docker-compose -f /home/runner/work/TwoWeekTestPractic/simbirsoft_sdet_project/docker-compose.yml down
