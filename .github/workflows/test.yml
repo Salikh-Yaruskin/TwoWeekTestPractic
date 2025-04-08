@@ -29,6 +29,18 @@ jobs:
           key: maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: maven-
 
+      - name: Set up Docker and Docker Compose
+        run: |
+            sudo apt-get update
+            sudo apt-get install -y docker.io
+            sudo curl -L "https://github.com/docker/compose/releases/download/v2.21.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            sudo chmod +x /usr/local/bin/docker-compose
+            docker-compose --version
+
+      - name: Start services with Docker Compose
+        run: |
+            docker-compose -f D:/GoPr/simbirsoft_sdet_project-master/docker-compose.yml up -d
+
       - name: Install dependencies
         run: mvn clean install -DskipTests
 
@@ -39,3 +51,7 @@ jobs:
         if: always()
         run: mvn allure:report
 
+      - name: Stop services with Docker Compose
+        if: always()
+        run: |
+            docker-compose -f D:/GoPr/simbirsoft_sdet_project-master/docker-compose.yml down
